@@ -14,7 +14,7 @@ Trying to run a newly installed WordPress site from the Apache2 server, but I ke
    ```
    I also went back through the *Burns 6.1 WordPress* readings to see if all the permissions were set correctly.
 
-   > 💡 **Side note:** I knew it wasn't my Virtual Machine (VM) capability because I created a larger instance machine before starting the process.
+   > **Side note:** I knew it wasn't my Virtual Machine (VM) capability because I created a larger instance machine before starting the process.
 
 2. **Verify Document Root & Path:**
    Next, I checked to see if my document root was correct and if I was in the correct absolute path. I used this command:
