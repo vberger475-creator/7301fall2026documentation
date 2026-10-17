@@ -1,29 +1,65 @@
-THE PROBLEM
-Trying to run newly installed WordPress from the Apache2 server; kept getting 404 Error Not Found 
+# Troubleshooting Report: Apache2 WordPress 404 Error Not Found
 
-TROUBLESHOOTING
-I checked that my file physically exisited and running and permissions were entered correctly
-I used the command ls -l /var/www/html/wordpress/ confirming that the file was present
-I went back through the Burns 6.1 Wordress readings to see if all the permissions were set correctly
-(Side note; I knew it wasn't my VM because I created a larger instance machine before starting the process)
-Next checked to see if my document root was correct and if I was in the correct absolute path 
-Using the grep -R "DocumentRoot" /etc/apache2/sites-enabled/ command and it showed me the correct path
-I also inspected the apache2 error logs using command sudo tail -n 20 /var/log/apache2/error.log
-Looking for a 'file not found' error which wasn't there, meaning I now know 100% my file exsists 
-Using sudo nano, I opened the apache config file to make sure those permissions were correct, sudo nano /etc/apache2/sites-available/000-default.conf
-I had to make sure since we were using .htaccess that ALLOWOVERIDE was set to All
-Then hit the sudo systemctl restart apache2 command to make sure everything was pushed through
-I was still getting 404 Error Not Found
-I cleared my cache and changed my browser from ChromeOS to FireFox, as Dr. R suggested in office hours 
-That still didn't work
-Hindsight looking back to my (Side Note) when I created a new VM instance, that means an new IP address is assigned. 
-I was using the older IP address from my BareBones OPAC not my new one 
-Once that was changed and the new URL was typed the congratlations and startup page for WordPress showed up
+## THE PROBLEM
+Trying to run a newly installed WordPress site from the Apache2 server, but I kept getting a **404 Error Not Found** in the browser.
 
-Solutions
-Make sure you IP address is correct, seems simple but super important
-If that doesn't work, make sure your file exsist and is in the correct path
-Always use sudo systemctl restart apache2 after each change you do to it, like changing permissions
-Make sure your root document is correct
-use ls -l if lost 
-Most of the time apache2 is running and connected, make sure you are telling it exactly where to find your file
+---
+
+## TROUBLESHOOTING
+
+1. **Check File Existence & Permissions:**
+   I checked that my file physically existed, was running, and that permissions were entered correctly. I used the following command to confirm that the file was present:
+   ```bash
+   ls -l /var/www/html/wordpress/
+   ```
+   I also went back through the *Burns 6.1 WordPress* readings to see if all the permissions were set correctly.
+
+   > 💡 **Side note:** I knew it wasn't my Virtual Machine (VM) capability because I created a larger instance machine before starting the process.
+
+2. **Verify Document Root & Path:**
+   Next, I checked to see if my document root was correct and if I was in the correct absolute path. I used this command:
+   ```bash
+   grep -R "DocumentRoot" /etc/apache2/sites-enabled/
+   ```
+   The output showed me the correct path.
+
+3. **Inspect Apache2 Logs:**
+   I inspected the Apache2 error logs using this command:
+   ```bash
+   sudo tail -n 20 /var/log/apache2/error.log
+   ```
+   I was looking for a `'file not found'` error, which wasn't there. This meant I now knew 100% that my file exists.
+
+4. **Review Apache Configurations:**
+   Using `sudo nano`, I opened the Apache configuration file to make sure those permissions were correct:
+   ```bash
+   sudo nano /etc/apache2/sites-available/000-default.conf
+   ```
+   I had to make sure that since we were using `.htaccess`, `ALLOWOVERRIDE` was set to `All`.
+
+5. **Restart Server:**
+   Then, I hit the restart command to make sure everything was pushed through:
+   ```bash
+   sudo systemctl restart apache2
+   ```
+   *Result:* I was still getting a 404 Error Not Found.
+
+6. **Clear Cache & Change Browser:**
+   I cleared my cache and changed my browser from ChromeOS to Firefox, as Dr. R suggested in office hours. That still didn't work.
+
+7. **The Breakthrough (The "Aha!" Moment):**
+   Hindsight looking back to my side note: when I created a new VM instance, that meant a **new IP address** was assigned! I was accidentally using the older IP address from my BareBones OPAC, not my new one. 
+
+   Once that was changed and the new URL was typed, the congratulations and startup page for WordPress finally showed up!
+
+---
+
+## Solutions
+
+* **Verify Your IP Address:** Make sure your IP address is correct. It seems simple but it is super important!
+* **Double Check File Paths:** If that doesn't work, make sure your file exists and is in the correct path.
+* **Restart Apache Freely:** Always use `sudo systemctl restart apache2` after each change you do to it, like changing permissions.
+* **Check the Root Document:** Make sure your root document configuration is accurate.
+* **Use Navigation Commands:** Use `ls -l` if you get lost in your directories.
+* **Direct the Traffic:** Most of the time Apache2 is running and connected; you just need to make sure you are telling it exactly where to find your file.
+
