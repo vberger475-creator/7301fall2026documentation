@@ -1,0 +1,29 @@
+THE PROBLEM
+Trying to run newly installed WordPress from the Apache2 server; kept getting 404 Error Not Found 
+
+TROUBLESHOOTING
+I checked that my file physically exisited and running and permissions were entered correctly
+I used the command ls -l /var/www/html/wordpress/ confirming that the file was present
+I went back through the Burns 6.1 Wordress readings to see if all the permissions were set correctly
+(Side note; I knew it wasn't my VM because I created a larger instance machine before starting the process)
+Next checked to see if my document root was correct and if I was in the correct absolute path 
+Using the grep -R "DocumentRoot" /etc/apache2/sites-enabled/ command and it showed me the correct path
+I also inspected the apache2 error logs using command sudo tail -n 20 /var/log/apache2/error.log
+Looking for a 'file not found' error which wasn't there, meaning I now know 100% my file exsists 
+Using sudo nano, I opened the apache config file to make sure those permissions were correct, sudo nano /etc/apache2/sites-available/000-default.conf
+I had to make sure since we were using .htaccess that ALLOWOVERIDE was set to All
+Then hit the sudo systemctl restart apache2 command to make sure everything was pushed through
+I was still getting 404 Error Not Found
+I cleared my cache and changed my browser from ChromeOS to FireFox, as Dr. R suggested in office hours 
+That still didn't work
+Hindsight looking back to my (Side Note) when I created a new VM instance, that means an new IP address is assigned. 
+I was using the older IP address from my BareBones OPAC not my new one 
+Once that was changed and the new URL was typed the congratlations and startup page for WordPress showed up
+
+Solutions
+Make sure you IP address is correct, seems simple but super important
+If that doesn't work, make sure your file exsist and is in the correct path
+Always use sudo systemctl restart apache2 after each change you do to it, like changing permissions
+Make sure your root document is correct
+use ls -l if lost 
+Most of the time apache2 is running and connected, make sure you are telling it exactly where to find your file
